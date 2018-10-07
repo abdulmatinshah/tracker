@@ -20,7 +20,7 @@ class Sender(models.Model):
 class Track(models.Model):
     # slug = models.SlugField(null=True)
     sender = models.ForeignKey(Sender, on_delete=models.SET_NULL, null=True)
-    r_from = models.CharField(max_length=100, verbose_name='Received From')
+    # r_from = models.CharField(max_length=100, verbose_name='Received From')
     c_name = models.CharField(max_length=100, verbose_name='Complainant Name')
     c_address = models.CharField(max_length=250, verbose_name='Complainant Address')
     gist = models.TextField(null=True)
