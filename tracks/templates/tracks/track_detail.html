@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p><strong> Sender:</strong> {{ object.sender.name }}</p>
+    <P><strong> Complainant's Name:</strong> {{ object.c_name|title }}</P>
+    <P><strong> Track Started:</strong>{{ object.created }}</P>
+    <P><strong> Last Updated:</strong>{{ object.updated }}</P>
+    <p><strong> Cutoff Date:</strong>{{ object.cutoff_date|date }}</p>
+    <p><strong> Remarks:</strong>{{ object.remarks|linebreaks }}</p>
+    <p><a href="{% url 'tracks:update' object.pk %}">Update</a></p>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-warning" href="{% url 'tracks:update' object.pk %}">Update</a>
+        <a class="btn btn-secondary" href="{% url 'tracks:list' %}">List</a>
+    </div>
+{% endblock %}

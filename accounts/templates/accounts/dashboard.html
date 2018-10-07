@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    
+    {% with total_images_created=request.user.images_created.count %}
+        <p>Welcome to your dashboard. You have bookmarked {{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
+    {% endwith %}
+    
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cumque dicta ea eius error fuga iusto maiores quae, quo temporibus! A autem corporis incidunt neque ratione. Cum harum nostrum sequi!<p>
+
+    <p>Please lonin <a href="{% url 'accounts:login' %}">Here</a></p>
+{% endblock %}

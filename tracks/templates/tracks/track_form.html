@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>{{ object.sender.name }}</p>
+    <P><strong> Complainant's Name:</strong> {{ object.c_name|title }}</P>
+    <P><strong> Track Started:</strong>{{ object.created }}</P>
+    <P><strong> Last Updated:</strong>{{ object.updated }}</P>
+    <p><strong> Cutoff Date:</strong>{{ object.cutoff_date|date }}</p>
+
+    <form action="." method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-success">Update</button>
+    </form>
+    <hr>
+    <p><a class="btn btn-outline-secondary" href="{% url 'tracks:list' %}">Cancel</a></p>
+{% endblock %}
