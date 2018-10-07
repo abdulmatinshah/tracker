@@ -25,7 +25,7 @@ SECRET_KEY = 'w^&s$asv@&_b&ahk!n@hfit^wd^n0_(usc@xyo0uc=1*sgqx+s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'compliant-tracker.herokuapp.com']
 
 
 # Application definition
