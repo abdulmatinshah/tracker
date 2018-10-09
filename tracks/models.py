@@ -17,6 +17,27 @@ class Sender(models.Model):
         return self.name
 
 
+class CompletionQuerySet(models.QuerySet):
+
+    def complete(self):
+        return self.filter(complete=True)
+
+    def incomplete(self):
+        return self.filter(complete=False)
+
+
+class TrackManager(models.Manager):
+
+    def get_queryset(self):
+        return CompletionQuerySet(self.model, using=self._db)
+
+    def complete(self):
+        return self.get_queryset().complete()
+
+    def incomplete(self):
+        return self.get_queryset().incomplete()
+
+
 class Track(models.Model):
     # slug = models.SlugField(null=True)
     sender = models.ForeignKey(Sender, on_delete=models.SET_NULL, null=True)
@@ -27,9 +48,12 @@ class Track(models.Model):
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     cutoff_date = models.DateField()
     remarks = models.TextField(null=True, blank=True)
+    complete = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = TrackManager()
 
     def __str__(self):
         return self.c_name

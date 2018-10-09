@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
-
 {% block content %}
-     <table class="table table-hover">
+    <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
+    {% for sender in senders %}
+         <a href="{% url 'tracks:list-by-sender' sender.pk %}"><span class="badge badge-secondary">{{ sender.name }}</span></a>
+    {% endfor %}
+    <hr>
+    {% if user.is_authenticated and user.is_superuser %}
+
+       <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
+    {% for assignee in assignees %}
+         <a href="{% url 'tracks:list-by-assignee' assignee.pk %}"><span class="badge badge-secondary">{{ assignee.username }}</span></a>
+    {% endfor %}
+    {% endif %}
+
+    <hr>
+     <table class="table table-hover table-sm">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -12,6 +25,7 @@
       <th scope="col">Assigned To</th>
       <th scope="col">Remarks</th>
       <th scope="col">CutOff Date</th>
+      <th scope="col">Complete</th>
       <th scope="col">Created</th>
       <th scope="col">Update</th>
       <th scope="col">Action</th>
@@ -19,7 +33,6 @@
   </thead>
   <tbody>
     {% for object in object_list %}
-
     <tr>
       <th scope="row">{{ object.pk }}</th>
       <td>{{ object.sender.short_name }}</td>
@@ -28,7 +41,8 @@
       <td>{{ object.gist }}</td>
       <td>{{ object.assignee }}</td>
       <td>{{ object.remarks }}</td>
-      <td>{{ object.cutoff_date|date }}</td>
+      <td>{{ object.cutoff_date|date }}
+      <td>{{ object.complete|yesno }}</td>
       <td>{{ object.created|date }}</td>
       <td>{{ object.updated|date }}</td>
       <td>
@@ -39,9 +53,6 @@
       </td>
     </tr>
     {% endfor %}
-
-
   </tbody>
 </table>
-
 {% endblock %}

@@ -65,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'tracks.context_processors.senders',
+                'tracks.context_processors.assignees',
             ],
             'libraries':{
                 'nav_active': 'accounts.templatetags.nav_active',
@@ -128,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ashkhabad'
 
 USE_I18N = True
 
