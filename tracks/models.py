@@ -55,6 +55,9 @@ class Track(models.Model):
 
     objects = TrackManager()
 
+    class Meta:
+        ordering = ['-updated', ]
+
     def __str__(self):
         return self.c_name
 

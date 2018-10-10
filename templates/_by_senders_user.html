@@ -1,0 +1,4 @@
+<a href="{% url 'accounts:user-dashboard' %}"><span class="badge badge-secondary">All</span></a>
+    {% for sender in senders %}
+         <a href="{% url 'accounts:by-sender' sender.pk %}"><span class="badge badge-secondary">{{ sender.name }}</span></a>
+    {% endfor %}

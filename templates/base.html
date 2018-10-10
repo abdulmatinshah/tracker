@@ -13,7 +13,12 @@
     <title>{% block title %} - Tracker{% endblock %}</title>
   </head>
   <body>
-    {% include '_navbar.html' %}
+    {% if user.is_superuser %}
+        {% include '_navbar.html' %}
+    {% else %}
+        {% include '_navbar_user.html' %}
+    {% endif %}
+
     {% include '_messages.html' %}
     <div class="container">
         <div class="row">

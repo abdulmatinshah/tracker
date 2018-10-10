@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormMixin
+from django.views.generic import (TemplateView, ListView,)
+# from django.views.generic.edit import FormMixin
 
 from .forms import LoginForm, PrettyLoginForm
+from tracks.models import Track, Sender
 
 
 class DashboardView(TemplateView):
     template_name = 'accounts/dashboard.html'
+    # mothing
 
 
 class CustomLoginView(LoginView):
@@ -39,4 +43,28 @@ class MyLoginView(LoginView):
                     messages.success(request, 'success {user}'.format(user=user.username))
         return redirect('accounts:login')
 
+
+class UserDashboardView(LoginRequiredMixin, ListView):
+    paginate_by = 20
+
+    def get_queryset(self):
+        qs = Track.objects.filter(assignee=self.request.user)
+        return qs
+
+
+class OverdueListView(ListView):
+    paginate_by = 20
+
+    def get_queryset(self):
+        qs = Track.objects.incomplete().filter(assignee=self.request.user, cutoff_date__lte=timezone.now())
+        return qs
+
+
+class SenderWiseListView(ListView):
+    paginate_by = 20
+
+    def get_queryset(self):
+        sender = Sender.objects.filter(pk=self.kwargs.get('sender_pk')).first()
+        qs = Track.objects.incomplete().filter(assignee=self.request.user, sender=sender)
+        return qs
 

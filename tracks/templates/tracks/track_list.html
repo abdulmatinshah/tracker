@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
-    {% for sender in senders %}
-         <a href="{% url 'tracks:list-by-sender' sender.pk %}"><span class="badge badge-secondary">{{ sender.name }}</span></a>
-    {% endfor %}
+    {% if not user.is_staff %}
+     {% include '_by_senders_user.html' %}
+    {% endif %}
     <hr>
     {% if user.is_authenticated and user.is_superuser %}
-
+        {% include '_by_senders.html' %}
        <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
     {% for assignee in assignees %}
-         <a href="{% url 'tracks:list-by-assignee' assignee.pk %}"><span class="badge badge-secondary">{{ assignee.username }}</span></a>
+         <a href="{% url 'tracks:list-by-assignee' assignee.pk  %}"><span class="badge badge-secondary">{{ assignee.profile.abbreviated_name }}</span></a>
     {% endfor %}
     {% endif %}
 
@@ -55,4 +54,6 @@
     {% endfor %}
   </tbody>
 </table>
+      {% include '_pagination.html' %}
+
 {% endblock %}

@@ -19,6 +19,7 @@ class IndexView(TemplateView):
 
 
 class TrackView(ListView):
+    paginate_by = 20
     queryset = Track.objects.incomplete()
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -34,12 +35,20 @@ class TrackUpdate(UpdateView):
     model = Track
     form_class = UpdateForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'is_superuser': self.request.user.is_superuser})
+        return kwargs
+
 
 class OverdueListView(ListView):
+    paginate_by = 20
+
     queryset = Track.objects.filter(cutoff_date__lte=timezone.now())
 
 
 class SenderWiseListView(ListView):
+    paginate_by = 20
 
     def get_queryset(self):
         sender = Sender.objects.filter(pk=self.kwargs.get('sender_pk')).first()
@@ -54,6 +63,7 @@ class SenderWiseListView(ListView):
 
 
 class AssigneeWiseListView(ListView):
+    paginate_by = 20
 
     def get_queryset(self):
         assignee = User.objects.filter(pk=self.kwargs.get('assignee_pk')).first()

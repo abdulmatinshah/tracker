@@ -1,0 +1,4 @@
+<a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
+    {% for sender in senders %}
+         <a href="{% url 'tracks:list-by-sender' sender.pk %}"><span class="badge badge-secondary">{{ sender.name }}</span></a>
+    {% endfor %}
