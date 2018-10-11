@@ -1,0 +1,36 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+       <li class="nav-item">
+        <a class="nav-link {% if active == 'sender' %}active{% endif %}" id="sender-tab" data-toggle="tab" href="#sender" role="tab" aria-controls="sender" aria-selected="true">
+            Received from
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active == 'assignee' %}active{% endif %}" id="assignee-tab" data-toggle="tab" href="#assignee" role="tab" aria-controls="assignee" aria-selected="false">
+            Assigned to
+        </a>
+      </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+
+      <div class="tab-pane fade {% if active == 'sender' %} show active{% endif %}" id="sender" role="tabpanel" aria-labelledby="sender-tab">
+        {% if user.is_superuser %}
+            {% include '_by_senders.html' %}
+            <br>
+        {% elif not user.is_staff %}
+            {% include '_by_senders_user.html' %}
+        {% endif %}
+      </div>
+
+      <div class="tab-pane fade {% if active == 'assignee' %} show active{% endif %}" id="assignee" role="tabpanel" aria-labelledby="assignee-tab">
+        {% if user.is_superuser %}
+          <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
+          {% for assignee in assignees %}
+            <a href="{% url 'tracks:list-by-assignee' assignee.pk  %}"><span class="badge badge-secondary">{{ assignee.profile.abbreviated_name }}</span></a>
+          {% endfor %}
+        {% elif not user.is_staff %}
+            {{ user.profile.abbreviated_name }}
+        {% endif %}
+      </div>
+
+    </div>

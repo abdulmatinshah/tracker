@@ -47,7 +47,8 @@ class Track(models.Model):
     gist = models.TextField(null=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     cutoff_date = models.DateField()
-    remarks = models.TextField(null=True, blank=True)
+    action_required = models.TextField(null=True, blank=True)
+    action_taken = models.TextField(null=True, blank=True)
     complete = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)

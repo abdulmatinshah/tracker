@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'import_export',
+
     'accounts',
     'tracks',
 ]
@@ -154,3 +156,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+DATE_FORMAT = "Y-m-d"

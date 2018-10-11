@@ -6,6 +6,8 @@
     <P><strong> Track Started:</strong>{{ object.created }}</P>
     <P><strong> Last Updated:</strong>{{ object.updated }}</P>
     <p><strong> Cutoff Date:</strong>{{ object.cutoff_date|date }}</p>
+    <p class="bg-warning"><strong> Action required:</strong><br>{{ object.action_required|linenumbers|linebreaksbr }}</p>
+    <p class="bg-success"><strong> Action taken:</strong><br>{{ object.action_taken }}</p>
 
     <form action="." method="POST">
     {% csrf_token %}

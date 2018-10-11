@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if not user.is_staff %}
-     {% include '_by_senders_user.html' %}
+
+    {% if "sender" in request.build_absolute_uri %}
+        {% include '_tabgroup.html' with active='sender' %}
+    {% elif "assignee" in request.build_absolute_uri %}
+        {% include '_tabgroup.html' with active='assignee' %}
+    {% else %}
+       {% include '_tabgroup.html' with active='sender' %}
     {% endif %}
-    <hr>
-    {% if user.is_authenticated and user.is_superuser %}
-        {% include '_by_senders.html' %}
-       <a href="{% url 'tracks:list' %}"><span class="badge badge-secondary">All</span></a>
-    {% for assignee in assignees %}
-         <a href="{% url 'tracks:list-by-assignee' assignee.pk  %}"><span class="badge badge-secondary">{{ assignee.profile.abbreviated_name }}</span></a>
-    {% endfor %}
-    {% endif %}
+
+{#{{ request.get_full_path|slice:"8:-3" }}#}
+
 
     <hr>
      <table class="table table-hover table-sm">
@@ -22,7 +22,8 @@
       <th scope="col">Address</th>
       <th scope="col">Gist</th>
       <th scope="col">Assigned To</th>
-      <th scope="col">Remarks</th>
+      <th scope="col">Action required</th>
+      <th scope="col">Action taken</th>
       <th scope="col">CutOff Date</th>
       <th scope="col">Complete</th>
       <th scope="col">Created</th>
@@ -39,9 +40,10 @@
       <td>{{ object.c_address }}</td>
       <td>{{ object.gist }}</td>
       <td>{{ object.assignee }}</td>
-      <td>{{ object.remarks }}</td>
+      <td>{{ object.action_required }}</td>
+      <td>{{ object.action_taken }}</td>
       <td>{{ object.cutoff_date|date }}
-      <td>{{ object.complete|yesno }}</td>
+      <td>{{ object.complete|yesno|title }}</td>
       <td>{{ object.created|date }}</td>
       <td>{{ object.updated|date }}</td>
       <td>
