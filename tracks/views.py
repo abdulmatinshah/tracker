@@ -18,7 +18,7 @@ class IndexView(TemplateView):
     template_name = 'tracks/index.html'
 
 
-class TrackView(ListView):
+class TrackView(LoginRequiredMixin, ListView):
     paginate_by = 20
     queryset = Track.objects.incomplete()
     # def get_context_data(self, *, object_list=None, **kwargs):
@@ -27,11 +27,11 @@ class TrackView(ListView):
     #     return context
 
 
-class TrackDetail(DetailView):
+class TrackDetail(LoginRequiredMixin, DetailView):
     model = Track
 
 
-class TrackUpdate(UpdateView):
+class TrackUpdate(LoginRequiredMixin, UpdateView):
     model = Track
     form_class = UpdateForm
 
@@ -41,13 +41,13 @@ class TrackUpdate(UpdateView):
         return kwargs
 
 
-class OverdueListView(ListView):
+class OverdueListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     queryset = Track.objects.filter(cutoff_date__lte=timezone.now())
 
 
-class SenderWiseListView(ListView):
+class SenderWiseListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
@@ -62,7 +62,7 @@ class SenderWiseListView(ListView):
     #     return context
 
 
-class AssigneeWiseListView(ListView):
+class AssigneeWiseListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):

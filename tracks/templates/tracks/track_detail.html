@@ -2,12 +2,12 @@
 
 {% block content %}
     <p><strong> Sender:</strong> {{ object.sender.name }}</p>
-    <P><strong> Complainant's Name:</strong> {{ object.c_name|title }}</P>
+    <P class="display-4"><strong> Complainant's Name:</strong> {{ object.c_name|title }}</P>
     <P><strong> Track Started:</strong>{{ object.created }}</P>
     <P><strong> Last Updated:</strong>{{ object.updated }}</P>
     <p><strong> Cutoff Date:</strong>{{ object.cutoff_date|date }}</p>
-    <p><strong> Action required:</strong><br>{{ object.action_required|linenumbers|linebreaksbr }}</p>
-    <p><strong> Action taken:</strong><br>{{ object.action_taken }}</p>
+    <p><strong class="bg-warning"> Action required:</strong><br>{{ object.action_required|linenumbers|linebreaksbr }}</p>
+    <p><strong class="bg-success"> Action taken:</strong><br>{{ object.action_taken }}</p>
     <p><strong> Complete:</strong>{{ object.complete|yesno|title }}</p>
 
     <div class="btn-group" role="group" aria-label="Basic example">

@@ -52,7 +52,7 @@ class UserDashboardView(LoginRequiredMixin, ListView):
         return qs
 
 
-class OverdueListView(ListView):
+class OverdueListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
@@ -60,7 +60,7 @@ class OverdueListView(ListView):
         return qs
 
 
-class SenderWiseListView(ListView):
+class SenderWiseListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
