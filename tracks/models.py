@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-
+from datetime import date
 # Create your models here.
 
 
@@ -64,3 +64,7 @@ class Track(models.Model):
 
     def get_absolute_url(self):
         return reverse('tracks:detail', kwargs={'pk': self.pk})
+
+    @property
+    def is_overdue(self):
+        return date.today() > self.cutoff_date

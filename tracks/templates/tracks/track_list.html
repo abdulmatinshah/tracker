@@ -26,26 +26,27 @@
       <th scope="col">Action taken</th>
       <th scope="col">CutOff Date</th>
       <th scope="col">Complete</th>
-      <th scope="col">Created</th>
-      <th scope="col">Update</th>
+{#      <th scope="col">Created</th>#}
+{#      <th scope="col">Update</th>#}
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     {% for object in object_list %}
-    <tr>
+    <tr {% if object.is_overdue %}class="table-danger"{% endif %}>
       <th scope="row">{{ object.pk }}</th>
       <td>{{ object.sender.short_name }}</td>
       <td>{{ object.c_name }}</td>
       <td>{{ object.c_address }}</td>
       <td>{{ object.gist }}</td>
-      <td>{{ object.assignee }}</td>
+      <td>{{ object.assignee.profile.abbreviated_name }}</td>
       <td>{{ object.action_required }}</td>
       <td>{{ object.action_taken }}</td>
-      <td>{{ object.cutoff_date|date }}
+      <td>{{ object.cutoff_date|date:"Y-m-d" }}
       <td>{{ object.complete|yesno|title }}</td>
-      <td>{{ object.created|date }}</td>
-      <td>{{ object.updated|date }}</td>
+{#      <td>{{ object.created|date:"Y-m-d" }}</td>#}
+{#      <td>{{ object.updated|date }}</td>#}
+        {{ object.overdue }}
       <td>
              <div class="btn-group" role="group" aria-label="Basic example">
                 <a class="btn btn-warning" href="{% url 'tracks:update' object.pk %}">Update</a>

@@ -20,7 +20,7 @@ class IndexView(TemplateView):
 
 class TrackView(LoginRequiredMixin, ListView):
     paginate_by = 20
-    queryset = Track.objects.incomplete()
+    queryset = Track.objects.incomplete().order_by('sender', 'cutoff_date')
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['senders'] = Sender.objects.all()
@@ -44,7 +44,7 @@ class TrackUpdate(LoginRequiredMixin, UpdateView):
 class OverdueListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
-    queryset = Track.objects.filter(cutoff_date__lte=timezone.now())
+    queryset = Track.objects.filter(cutoff_date__lt=timezone.now()).order_by('sender')
 
 
 class SenderWiseListView(LoginRequiredMixin, ListView):
